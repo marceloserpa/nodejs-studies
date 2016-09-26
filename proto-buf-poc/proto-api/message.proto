@@ -1,0 +1,8 @@
+message Message {
+    required string user = 1;
+    required string text = 2;
+}
+
+message MessageList {
+    repeated Message messages = 1;
+}

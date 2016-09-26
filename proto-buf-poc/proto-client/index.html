@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <script src="long.js"></script>
+    <script src="bytebuffer.js"></script>
+    <script src="protobuf.js"></script>
+    <script src="axios.min.js"></script>
+  </head>
+  <body>
+    <pre id="content"></pre>
+    <button onClick="sendMessage()">send message to server</button>
+    <button onClick="loadMessage()">load messages</button>
+    <script type="text/javascript">
+      "use strict";
+      var ProtoBuf = dcodeIO.ProtoBuf
+      var builder = ProtoBuf.loadProtoFile('./message.proto');
+      var Message = builder.build('Message');
+      var MessageList = builder.build('MessageList');
+
+      var loadMessage = () => {
+        axios.get('http://localhost:3000/api/messages/', {responseType: 'arraybuffer'})
+          .then(function (response) {
+            let msg = MessageList.decode(response.data)
+            console.log(msg);
+            document.getElementById('content').innerText = JSON.stringify(msg, null, 2)
+
+          })
+          .catch(function (response) {
+            console.log(response)
+          })
+
+      }
+      var sendMessage = ()=>{
+        var msg = new Message({user: 'yo', text: 'slang'})
+        axios.post('http://localhost:3000/api/messages', msg.toArrayBuffer(),
+            { responseType: 'arraybuffer',
+            headers: {'Content-Type': 'application/octet-stream'}}
+          ).then(function (response) {
+            console.log(response)
+          })
+          .catch(function (response) {
+            console.log(response)
+          })
+      }
+    </script>
+  </body>
+</html>

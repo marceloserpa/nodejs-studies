@@ -1,10 +1,18 @@
 import http from 'http';
+import express from 'express';
+import bodyParser from 'body-parser';
 
-const PORT = 9000;
+import PersonRoutes from './routes/PersonRoutes.js';
 
-http.createServer((req, res) => {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World\n');
-}).listen(PORT, '127.0.0.1');
+var PORT = 9000;
 
-console.log('Server running at http://127.0.0.1:/'+PORT);
+var app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+var personRoutes = new PersonRoutes();
+app.use(personRoutes.configure());
+
+app.listen(PORT, '127.0.0.1');
+
+console.log(`Server running at http://127.0.0.1:${PORT}/`);

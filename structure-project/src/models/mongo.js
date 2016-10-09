@@ -8,4 +8,4 @@ var userSchema  = {
     "surname" : String
 };
 // create model if not exists.
-module.exports = mongoose.model('user',userSchema);
+module.exports = mongoose.model('User',userSchema);

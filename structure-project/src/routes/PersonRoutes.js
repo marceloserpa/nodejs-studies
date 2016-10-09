@@ -1,5 +1,7 @@
 import express from 'express';
 
+import MongoClient from '../models/mongo.js';
+
 export default class PersonRoutes {
 
   constructor() {
@@ -10,11 +12,29 @@ export default class PersonRoutes {
   configure() {
     var people = [];
     this.router.get(this.PEOPLE_API, function(req, res){
-      res.send(people);
+      var response = {};
+      MongoClient.find({},function(err,data){
+          if(err) {
+              response = {"error" : true,"message" : "Error fetching data"};
+          } else {
+              response = {"error" : false,"message" : data};
+          }
+          res.status(200).json(response);
+      });
     });
     this.router.post(this.PEOPLE_API, function(req, res){
-      people.push(req.body)
-      res.status(201).send('Created')
+      var db = new MongoClient();
+      db.name = req.body.name;
+      db.surname = req.body.surname;
+      db.save(function(err){
+          var response = {};
+          if(err) {
+              response = {"error" : true,"message" : "Error adding data"};
+          } else {
+              response = {"error" : false,"message" : "Data added"};
+          }
+          res.status(201).send(response)
+        });
     });
     return this.router;
   }

@@ -43,7 +43,8 @@ eventEmitter4.emit('event', 'a3', 'b3');
 
 console.log("Synchronous EventEmmiter Sample");
 const eventEmitter5 = new EventEmitter();
-eventEmitter5.on('event', (sleepBy, name) =>{
+eventEmitter5.on('event', (sleepBy, name) => {
+  console.log('registered ' + name);
   setTimeout(function(){
       console.log('Finished execution: ' + name);
   }, sleepBy);

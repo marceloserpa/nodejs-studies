@@ -1,0 +1,15 @@
+
+// message.proto
+package bookpackage;
+syntax = "proto3";
+
+message Book {
+    required string title = 1;
+    required string author = 2;
+    required string description = 3;
+    required string id = 4;
+}
+
+message BookList {
+    repeated Book books = 1;
+}

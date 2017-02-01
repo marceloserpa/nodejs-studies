@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html ng-app="bookStoreApp">
+<head>
+    <title>Angular + Protobuf </title>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-route/angular-route.min.js"></script>
+    <script src="node_modules/protobufjs/dist/protobuf.js"></script>
+</head>
+<body>
+<div class="page-container">
+    <div ng-view></div>
+
+    <script src="app/bookstoreapp.js"></script>
+    <script src="app/books/config/ModuleConfig.js"></script>
+    <script src="app/books/config/RoutesConfig.js"></script>
+    <script src="app/books/controller/BookController.js"></script>
+    <script src="app/books/service/BookService.js"></script>
+</div>
+</body>
+</html>

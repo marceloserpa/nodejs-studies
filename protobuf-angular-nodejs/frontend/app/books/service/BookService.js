@@ -20,18 +20,26 @@
 
     function getAll(){
       return $http.get(URL_BOOK_API, {responseType: "arraybuffer"})
-        .then(function (response){
-            protobuf.load("/message.proto", (err, root) => {
-              if (err) throw err;
-              var BookListMessage = root.lookup("bookpackage.BookList");
-              var bookList = BookListMessage.decode(response.data)
-              console.log("---parsing---");
-              console.log(bookList)
-              console.log("---parsed---");
-            });
+        .then((response) => {
+          return protobuf.load("/message.proto").then((root) => {
+            var BookListMessage = root.lookup("bookpackage.BookList");
+            var booksList = BookListMessage.decode(new Uint8Array(response.data));
 
-              return response.data;
-            })
+            var BookMessage = root.lookup("bookpackage.Book");
+            var booksMessage = booksList.books;
+
+            var books = [];
+            for (var i = 0; i < booksMessage.length; i++) {
+                books.push({
+                  "title": booksMessage[i].title,
+                  "author": booksMessage[i].author,
+                  "id": booksMessage[i].id,
+                  "description": booksMessage[i].description,
+                });
+            }
+            return books;
+          });
+        })
         .catch(handleErrorHttpRequest);
     };
 

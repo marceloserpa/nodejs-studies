@@ -23,6 +23,7 @@
 
     function get(){
       BookService.getAll().then(function(data) {
+        console.log(data)
         vm.books = data;
       });
     };

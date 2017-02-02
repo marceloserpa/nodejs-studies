@@ -26,13 +26,18 @@ app.get("/api/books", (req, res, next) => {
     console.log("Execute: GET - api/books");
     if (err) throw err;
     var BookMessage = root.lookup("bookpackage.Book");
-    var message = BookMessage.create({author: "Stephen King", title: "The shining", description : "Lorem", id: "1"});
-    var buffer = BookMessage.encode(message).finish();
+    var message1 = BookMessage.create({author: "Stephen King", title: "The shining", description : "Lorem", id: "1"});
+    var message2 = BookMessage.create({author: "Unknown", title: "The owen", description : "Test", id: "2"});
+    //var buffer = BookMessage.encode(message).finish();
 
     var BookListMessage = root.lookup("bookpackage.BookList");
-    var bookList = BookListMessage.create({books: [message]})
+    var bookList = BookListMessage.create({books: [message1, message2]})
 
-    res.send(BookListMessage.encode(bookList).finish());
+    var encoded = BookListMessage.encode(bookList).finish();
+
+    console.log(encoded);
+
+    res.send(encoded);
   });
 });
 

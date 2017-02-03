@@ -70,15 +70,37 @@
     }
 
     function update(book){
-      return $http.put(URL_BOOK_API+ book.id, book)
-        .then(handleCompleteHttpRequest)
-        .catch(handleErrorHttpRequest);
+      return protobuf.load("/message.proto").then((root) => {
+        var BookMessage = root.lookup("bookpackage.Book");
+        var message = BookMessage.create({author: book.author, title: book.title, description : book.description, id: book.id});
+        var buffer = BookMessage.encode(message).finish();
+        var req = {
+          method: 'PUT',
+          url: URL_BOOK_API + book.id,
+          transformRequest: function(r) { return r;},
+          headers: {'Content-Type': 'application/octet-stream'},
+          data: buffer,
+          responseType: 'arraybuffer'
+        }
+
+        return $http(req).then(handleCompleteHttpRequest)
+          .catch(handleErrorHttpRequest);
+      });
     }
 
     function find(id){
-      return $http.get(URL_BOOK_API+id)
-        .then(handleCompleteHttpRequest)
-        .catch(handleErrorHttpRequest);
+        return $http.get(URL_BOOK_API+id, {responseType: "arraybuffer"})
+          .then((response) => {
+            return protobuf.load("/message.proto").then((root) => {
+              var BookMessage = root.lookup("bookpackage.Book");
+              console.log("Execute - " + URL_BOOK_API+id);
+              console.log(response.data);
+              var book = BookMessage.decode(new Uint8Array(response.data));
+              console.log("End execute - " + URL_BOOK_API+id);
+              return book;
+            });
+          })
+          .catch(handleErrorHttpRequest);
     }
 
     function handleCompleteHttpRequest(response){

@@ -1,6 +1,8 @@
 <div id="edit-book-form">
   <h2>Edit Book</h2>
   <form novalidate class="simple-form" ng-submit="bookVm.update()">
+    <label>ID:</label>
+    <input type="text" ng-model="bookVm.book.id" /><br />
     <label>Title:</label>
     <input type="text" ng-model="bookVm.book.title" /><br />
     <label>Description:</label>

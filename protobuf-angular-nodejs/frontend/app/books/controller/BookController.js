@@ -50,6 +50,7 @@
 
     function initModel(id){
       BookService.find(id).then(function(data) {
+        console.log(data);
         vm.book = data;
       });
     };

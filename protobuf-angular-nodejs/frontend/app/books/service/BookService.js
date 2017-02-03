@@ -44,9 +44,23 @@
     };
 
     function save(book){
-      return $http.post(URL_BOOK_API, book)
-        .then(handleCompleteHttpRequest)
-        .catch(handleErrorHttpRequest);
+      return protobuf.load("/message.proto").then((root) => {
+        var BookMessage = root.lookup("bookpackage.Book");
+        var message = BookMessage.create({author: book.author, title: book.title, description : book.description, id: book.id});
+        var buffer = BookMessage.encode(message).finish();
+
+        var req = {
+          method: 'POST',
+          url: URL_BOOK_API,
+          transformRequest: function(r) { return r;},
+          headers: {'Content-Type': 'application/octet-stream'},
+          data: buffer,
+          responseType: 'arraybuffer'
+        }
+
+        return $http(req).then(handleCompleteHttpRequest)
+          .catch(handleErrorHttpRequest);
+      });
     }
 
     function deleteById(id){

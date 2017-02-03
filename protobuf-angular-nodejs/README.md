@@ -1,13 +1,11 @@
 Protobuf with Angular and Nodejs
 ------------------
 
-## Requirements
-
-
 # Running backend project
 - Enter inside backend folder 
 - Run: npm install
 - Run: node server.js
+- Access url localhost:3000/api/books
 
 
 # Running frontend project

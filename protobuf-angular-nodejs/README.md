@@ -4,7 +4,7 @@ Protobuf with Angular and Nodejs
 ## Requirements
 
 
-# Running frontend project
+# Running backend project
 - Enter inside backend folder 
 - Run: npm install
 - Run: node server.js

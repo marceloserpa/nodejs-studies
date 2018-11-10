@@ -9,11 +9,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "body-parser": "^1.18.3",
     "jest": "^23.6.0",
     "supertest": "^3.3.0"
   },
   "dependencies": {
-    "body-parser": "^1.18.3",
     "express": "^4.16.4"
   }
 }

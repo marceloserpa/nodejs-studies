@@ -1,3 +1,4 @@
+/** Mocks **/
 const message = require('./src/message');
 jest.doMock('./src/message', () => {
   let sayhelloMock = () => 'hello supertest';
@@ -6,7 +7,10 @@ jest.doMock('./src/message', () => {
 
 jest.mock("./src/database-fake");
 var databaseMock = require('./src/database-fake');
+databaseMock.save = jest.fn(() => Promise.resolve(''))
 
+
+/** Tests **/
 var request = require('supertest');
 var app = require('./src/app');
 

@@ -17,13 +17,14 @@ app.get('/hello-world', (request, response) => {
 app.post('/save', (request, response) => {
   let user = request.body;
   console.log(user)
-  database.save(user);
-  response.send('a');
-  /*
+  //database.save(user);
+  //response.send('a');
+
   database.save(user).then(result => {
     console.log(result);
     response.send(result);
-  });*/
+  });
+
 });
 
 module.exports = app;

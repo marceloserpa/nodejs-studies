@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "axios": "^0.17.1",
-    "express": "^4.16.2",
+    "express": "^4.18.2",
     "hystrix-dashboard": "^1.0.3",
     "hystrixjs": "^0.2.0",
     "i": "^0.3.6",

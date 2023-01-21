@@ -6,18 +6,17 @@ import { Registry, collectDefaultMetrics } from 'prom-client';
 export class MetricsController {
 
     @Get()
-    getMetrics() {
+    getMetrics() {       
         // Create a Registry which registers the metrics
         const register = new Registry()
 
         // Add a default label which is added to all metrics
         register.setDefaultLabels({
-        app: 'example-nodejs-app'
+        app: 'poc-metrics'
         })
 
         // Enable the collection of default metrics
         collectDefaultMetrics({ register })
-
 
         return register.metrics();
     }
